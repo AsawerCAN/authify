@@ -24,6 +24,8 @@ import {
 import { verifyToken } from "../utils/jwt";
 import SessionModel from "../models/session.model";
 import appAssert from "../utils/AppAssert";
+import VerificationCodeModel from "../models/verificationCode.model";
+import VerificationCodeType from "../constants/verificationCodeType";
 
 export const registerHandler = catchErrors(async (req, res) => {
   const request = registerSchema.parse({

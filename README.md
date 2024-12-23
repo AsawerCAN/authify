@@ -8,6 +8,7 @@ Functionalities:
 - send emails for account verification and password reset
 - get and remove sessions
 - error handling for almost every possible error
+- front-end add here----------------------------------------------------------------
 
 ## API Architecture
 
