@@ -8,7 +8,8 @@ Functionalities:
 - send emails for account verification and password reset
 - get and remove sessions
 - error handling for almost every possible error
-- front-end add here----------------------------------------------------------------
+- frontend forms for login, register, reset password, etc.
+- custom react hooks to manage auth state & application data
 
 ## API Architecture
 
@@ -28,6 +29,8 @@ Errors are handled using a custom error handler middleware. The error handler mi
 ## Authentication Flow
 
 When a user logs in, the server will generate two JWTs: `AccessToken` and `RefreshToken`. Both JWTs are sent back to the client in secure, HTTP-only cookies. The AccessToken is short-lived (15 minutes) and is passed on EVERY request to authenticate the user. The RefreshToken is long-lived (30 days) and is ONLY sent to the `/refresh` endpoint. This endpoint is used to generate a new AccessToken, which will then be passed on subsequent requests.
+
+The frontend has logic that checks for `401 AccessTokenExpired` errors. When this error occurs, the frontend will send a request to the `/refresh` endpoint to get a new AccessToken. If that returns a 200 (meaning a new AccessToken was issued), then the client will retry the original request. This gives the user a seamless experience without having to log in again. If the `/refresh` endpoint errors, the user will be logged out and redirected to the login page.
 
 ## Run Locally
 
@@ -77,3 +80,8 @@ npm run dev
 ### Postman Collection
 
 There is a Postman collection in the `backend` directory that you can use to test the API. The `postman.json` contains requests for all the routes in the API. You can [import the JSON directly](https://learning.postman.com/docs/getting-started/importing-and-exporting/importing-data/#import-postman-data) into Postman.
+
+![Alt text](frontend/public/signup.png)
+![Alt text](frontend/public/unverifyUserProfile.png)
+![Alt text](frontend/public/verifyUserProfile.png)
+![Alt text](frontend/public/session.png)

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../lib/api";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -15,12 +15,13 @@ const LoginPage = () => {
     password: "",
     general: "",
   });
+  const redirectUrl = location.state?.redirectUrl || "/";
 
   const { mutate: SignIn, isPending } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
       console.log(data);
-      navigate("/", {
+      navigate(redirectUrl, {
         replace: true,
       });
     },
